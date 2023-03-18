@@ -1,4 +1,6 @@
+
 const chatForm = document.getElementById("chat-form");
+const leaveChat = document.getElementById("leave-btn");
 const chatMessages = document.querySelector(".chat-messages");
 const socket = io();
 
@@ -37,8 +39,14 @@ function sendMessage() {
   msg.value = "";
 }
 
+function leaveConnection() {
+    socket.disconnect()
+    console.log("ok done!")
+}
+
 // Handling receiving messages from the server
 socket.on("chatMessage", (message) => {
+    console.log({message})
   appendMessage(message, "Tavern");
 });
 
@@ -49,6 +57,8 @@ msg.addEventListener("keydown", (event) => {
     sendMessage();
   }
 });
+
+leaveChat.addEventListener("click", leaveConnection);
 
 // // Message from server
 // socket.on("message", (message) => {
