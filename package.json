@@ -1,7 +1,7 @@
 {
   "name": "Tavern Chatbot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple chatBot for ordering meal",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -15,9 +15,9 @@
   "author": "Sylvester Eziagor",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Vestertech//Chatbot/issues"
+    "url": "https://github.com/Vestertech/Chatbot/issues"
   },
-  "homepage": "https://github.com/Vestertech//Chatbot//#readme",
+  "homepage": "https://github.com/Vestertech/Chatbot#readme",
   "dependencies": {
     "connect-mongo": "^5.0.0",
     "connect-mongodb-session": "^3.1.1",
