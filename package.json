@@ -7,6 +7,9 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
+  "engines": {
+    "node": "16.17.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Vestertech/Chatbot.git"
