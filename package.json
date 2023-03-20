@@ -1,7 +1,7 @@
 {
-  "name": "Tavern Chatbot",
+  "name": "tavernChatbot",
   "version": "1.0.0",
-  "description": "Simple chatBot for ordering meal",
+  "description": "chatBot",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -12,7 +12,7 @@
     "url": "https://github.com/Vestertech/Chatbot.git"
   },
   "keywords": [],
-  "author": "Sylvester Eziagor",
+  "author": "sylvester",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Vestertech/Chatbot/issues"
