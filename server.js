@@ -1,8 +1,7 @@
 const path = require("path");
-const http = require("http"); //setting server to handle Socket.io
 const express = require("express");
-
 const app = express();
+const http = require("http"); //setting server to handle Socket.io
 const server = http.createServer(app);
 const session = require("express-session");
 
@@ -23,7 +22,6 @@ const sessionMiddleware = session({
 // Set static folder
 app.use(express.static(path.join(__dirname, "public")));
 
-const botName = "Tavern chatBot";
 const orderHistory = [];
 const fastFoods = {
   1: "Steak",

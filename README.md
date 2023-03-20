@@ -1,7 +1,7 @@
 # Tavern Chat Bot
 
-Link to live site [here](https://tavern.onrender.com)
-This chatbot will fulfills all the below requirements
+Checkout the tavernBot [here](https://tavern.onrender.com)
+Tavern Chatbot fulfills the following as required.
 
 ---
 
