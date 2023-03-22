@@ -8,6 +8,10 @@ const session = require("express-session");
 const { Server } = require("socket.io");
 const io = new Server(server); // Initializing variables
 
+require("dotenv").config();
+const mongoose = require("mongoose");
+const mongoStore = require("connect-mongo");
+
 //  session middleware
 const sessionMiddleware = session({
   secret: "secret-key",
@@ -39,51 +43,28 @@ io.use((socket, next) => {
 // Run when client connects
 io.on("connection", (socket) => {
   console.log("User connected...", socket.id);
-
+  deviceId = socket.handshake.headers["user-agent"];
   // Get the unique identifier for the user's device
-  const deviceId = socket.handshake.headers["user-agent"];
-
   // Check if the user already has an existing session
-  if (
-    socket.request.session[deviceId] &&
-    socket.request.session[deviceId].userName
-  ) {
+  if (socket.request.session[deviceId]?.userName) {
     // If the user already has a session, use the existing user name and current order
+    const { userName, currentOrder } = socket.request.session[deviceId];
     socket.emit(
       "chatMessage",
-      `Welcome back ${socket.id}``Welcome back, ${
-        socket.request.session[deviceId].userName
-      }! You have a current order of ${socket.request.session[
-        deviceId
-      ].currentOrder.join(", ")}`
+      `Welcome back, ${userName}! You have a current order of ${currentOrder.join(
+        ", "
+      )}`
     );
   } else {
     // If the user does not have a session, create a new session for the user's device
     socket.request.session[deviceId] = {
       userName: "",
       currentOrder: [],
-      deviceId: deviceId, // store the deviceId in the session object
+      deviceId, // store the deviceId in the session object
     };
   }
 
-  // Ask for the user's name if not provided already
-  if (!socket.request.session[deviceId].userName) {
-    socket.emit(
-      "chatMessage",
-      "Hello!, Welcome to our Tavern.  What's your name?"
-    );
-  } else {
-    socket.emit(
-      "chatMessage",
-      `Welcome back, ${
-        socket.request.session[deviceId].userName
-      }! You have a current order of ${socket.request.session[
-        deviceId
-      ].currentOrder.join(", ")}`
-    );
-  }
-
-  let userName = socket.request.session[deviceId].userName;
+  const userName = socket.request.session[deviceId].userName;
 
   //   Listen for incoming Tavern messages
   socket.on("chatMessage", (message) => {
@@ -229,9 +210,12 @@ io.on("connection", (socket) => {
     delete socket.request.session[deviceId];
     console.log("User disconnected:", socket.id);
   });
-    
 });
+mongoose
+  .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/chatbot")
+  .then(() => {
+    console.log("connected to the database");
 
-const PORT = 4000 || process.env.PORT;
-server.listen(PORT, () => console.log(`server running on port ${PORT}...`));
-
+    const PORT = 4000 || process.env.PORT;
+    server.listen(PORT, () => console.log(`server running on port ${PORT}...`));
+  });
