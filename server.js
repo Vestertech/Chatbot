@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const http = require("http"); //setting server to handle Socket.io
 const server = http.createServer(app);
-const session = require("express-session");
+const session = require("cookie-session");
 
 const { Server } = require("socket.io");
 const io = new Server(server); // Initializing variables
