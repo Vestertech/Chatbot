@@ -41,7 +41,7 @@ function sendMessage() {
 
 function leaveConnection() {
     socket.disconnect()
-    console.log("ok done!")
+  console.log("Connection closed!");
 }
 
 // Handling receiving messages from the server

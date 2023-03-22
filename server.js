@@ -64,7 +64,24 @@ io.on("connection", (socket) => {
     };
   }
 
-  const userName = socket.request.session[deviceId].userName;
+  // Ask for the user's name if not provided already
+  if (!socket.request.session[deviceId].userName) {
+    socket.emit(
+      "chatMessage",
+      "Hello!, Welcome to our Tavern.  What's your name?"
+    );
+  } else {
+    socket.emit(
+      "chatMessage",
+      `Welcome back, ${
+        socket.request.session[deviceId].userName
+      }! You have a current order of ${socket.request.session[
+        deviceId
+      ].currentOrder.join(", ")}`
+    );
+  }
+
+  let userName = socket.request.session[deviceId].userName;
 
   //   Listen for incoming Tavern messages
   socket.on("chatMessage", (message) => {
@@ -212,10 +229,10 @@ io.on("connection", (socket) => {
   });
 });
 mongoose
-  .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/chatbot")
-  .then(() => {
-    console.log("connected to the database");
-
-    const PORT = 4000 || process.env.PORT;
-    server.listen(PORT, () => console.log(`server running on port ${PORT}...`));
-  });
+.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/chatbot")
+.then(() => {
+  console.log("connected to the database");
+  
+  const PORT = 4000 || process.env.PORT;
+  server.listen(PORT, () => console.log(`server running on port ${PORT}...`));
+});
