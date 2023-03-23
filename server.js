@@ -228,11 +228,11 @@ io.on("connection", (socket) => {
     console.log("User disconnected:", socket.id);
   });
 });
-mongoose
-.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/chatbot")
-.then(() => {
-  console.log("connected to the database");
+// mongoose
+// .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/chatbot")
+// .then(() => {
+//   console.log("connected to the database");
+// });
   
   const PORT = 4000 || process.env.PORT;
   server.listen(PORT, () => console.log(`server running on port ${PORT}...`));
-});
